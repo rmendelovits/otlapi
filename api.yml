@@ -1,0 +1,384 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Open Textbook Library
+servers:
+  - url: 'https://open.umn.edu'
+paths:
+  /opentextbooks/textbooks.json:
+    get:
+      summary: 'Get all textbooks'
+      operationId: listTextbooks
+      tags:
+        - textbook
+      parameters:
+        - name: term
+          in: query
+          description: search term
+          required: false
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: Pagination ID (default is 1)
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: 'Details about all textbooks paginated'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Textbooks'
+  /opentextbooks/textbooks/new.json:
+    get:
+      summary: 'Get new textbooks'
+      operationId: listTextbooks
+      tags:
+        - textbook
+      parameters:
+        - name: term
+          in: query
+          description: search term
+          required: false
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: Pagination ID (default is 1)
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: 'Details about new textbooks paginated'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Textbooks'
+  /opentextbooks/textbooks/reviewed.json:
+    get:
+      summary: 'Get all reviewed textbooks'
+      operationId: listTextbooks
+      tags:
+        - textbook
+      parameters:
+        - name: term
+          in: query
+          description: search term
+          required: false
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: Pagination ID (default is 1)
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: 'Details about reviewed textbooks paginated'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Textbooks'
+  /opentextbooks/textbooks/in_development.json:
+    get:
+      summary: 'Get all in development textbooks'
+      operationId: listTextbooks
+      tags:
+        - textbook
+      parameters:
+        - name: term
+          in: query
+          description: search term
+          required: false
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: Pagination ID (default is 1)
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: 'Details about in development textbooks paginated'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Textbooks'
+  /opentextbooks/textbooks/{id}.json:
+    get:
+      summary: 'Get the textbook with the given ID'
+      operationId: listTextbook
+      tags:
+        - textbook
+      parameters:
+        - name: id
+          in: path
+          description: Textbook ID
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'Sample response: Details about a textbook by ID'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Textbook'
+  /opentextbooks/textbooks/subject/{subject}.json:
+    get:
+      summary: 'Get all textbooks in the subject provided'
+      operationId: listTextbooks
+      tags:
+        - textbook
+      parameters:
+        - name: subject
+          in: path
+          description: Textbook subject
+          required: true
+          schema:
+            type: string
+        - name: term
+          in: query
+          description: search term
+          required: false
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: Pagination ID (default is 1)
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: 'Details about all textbook by subject (paginated)'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Textbooks'
+components:
+  schemas:
+    Contributor:
+      type: object
+      properties:
+        id:
+          type: integer
+        contribution:
+          type: string
+        primary:
+          type: boolean
+        corperate:
+          type: boolean
+        title:
+          type: string
+        first_name:
+          type: string
+        middle_name:
+          type: string
+        last_name:
+          type: string
+        location:
+          type: string
+        background_text:
+          type: string
+    Subject:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        parent_subject_id:
+          type: integer
+        call_number:
+          type: string
+        textbooks_count:
+          type: integer
+        url:
+          type: string
+          format: uri
+    Publisher:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        url:
+          type: string
+          format: uri
+        year:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    Format:
+      type: object
+      properties:
+        id:
+          type: integer
+        format:
+          type: string
+        url:
+          type: string
+          format: uri
+        display_price:
+          type: integer
+        isbn:
+          type: string
+          format: date-time
+    Review:
+      type: object
+      properties:
+        id:
+          type: integer
+        first_name:
+          type: string
+        last_name:
+          type: string
+        position:
+          type: string
+        institution_name:
+          type: string
+        comprehensiveness_rating:
+          type: integer
+        comprehensiveness_review:
+          type: string
+        accuracy_rating:
+          type: integer
+        accuracy_review:
+          type: string
+        relevance_rating:
+          type: integer
+        relevance_review:
+          type: string
+        clarity_rating:
+          type: integer
+        clarity_review:
+          type: string
+        consistency_rating:
+          type: integer
+        consistency_review:
+          type: string
+        modularity_rating:
+          type: integer
+        modularity_review:
+          type: string
+        organization_rating:
+          type: integer
+        organization_review:
+          type: string
+        interface_rating:
+          type: integer
+        interface_review:
+          type: string
+        grammatical_rating:
+          type: integer
+        grammatical_review:
+          type: string
+        cultural_rating:
+          type: integer
+        cultural_review:
+          type: string
+        overall_rating:
+          type: integer
+        overall_review:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    Textbook:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+            title:
+              type: string
+            edition_statement:
+              type: string
+            volume:
+              type: string
+            copyright_year:
+              type: integer
+            ISBN10:
+              type: string
+            ISBN13:
+              type: string
+            license:
+              type: string
+            language:
+              type: string
+            description:
+              type: string
+            contributors:
+              type: array
+              items:
+                $ref: "#/components/schemas/Contributor"
+            subjects:
+              type: array
+              items:
+                $ref: "#/components/schemas/Subject"
+            publishers:
+              type: array
+              items:
+                $ref: "#/components/schemas/Publisher"
+            formats:
+              type: array
+              items:
+                $ref: "#/components/schemas/Format"
+            rating:
+              type: string
+            textbook_reviews_count:
+              type: integer
+            reviews:
+              type: array
+              items:
+                $ref: "#/components/schemas/Review"
+            url:
+              type: string
+              format: uri
+            updated_at:
+              type: string
+              format: date-time
+    Textbooks:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Textbooks"
+        links:
+          type: object
+          properties:
+            self:
+              type: string
+              format: uri
+            total_pages:
+              type: integer
+            total_count:
+              type: integer
+            next:
+              type: string
+              format: uri
+externalDocs:
+    description: Find the official documentation on the Open Textbook Library Website
+    url: https://open.umn.edu/opentextbooks/OTL-API.pdf
